@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Registration Form</title>
+    <style>
+        /* Basic form styling */
+        .form-section {
+            display: none;
+        }
+        .form-section.active {
+            display: block;
+        }
+        /* Add slight rounding to all form elements */
+        input[type="text"], input[type="password"], input[type="tel"], input[type="email"], select, button {
+            border-radius: 5px;
+        }
+        .customRadioBtn input {
+            border-radius: 5px;
+        }
+        .multiTabHeading li a {
+            border-radius: 5px;
+        }
+        .form-group, .multiTabContent, .customRadioBtn span {
+            border-radius: 5px;
+        }
+        .button {
+            border-radius: 5px;
+        }
+        .customCheckBox input {
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="cimm_wizardReg">
+    <form id="regForm" action="CommercialReg.action" method="post" onsubmit="submitThisForm(this); return false;" data-hideBlock="cimm_wizardReg" data-recaptcha="$captchaVal">
+        <div class="multiTab" id="wizardReg">
+            <ul class="multiTabHeading clearAfter">
+                <li>
+                    <a href="#step-1">
+                        <span class="stepDesc">
+                            <b>1</b>
+                            <span class="blockElement mTop-2">Registration Info</span>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#step-2">
+                        <span class="stepDesc">
+                            <b>2</b>
+                            <span class="blockElement mTop-2">Business Address</span>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#step-3">
+                        <span class="stepDesc">
+                            <b>3</b>
+                            <span class="blockElement mTop-2">Create Password</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+            <div class="multiTabContent">
+                <div id="step-1">
+                    <p class="regBlockHeading visible-xs">Registration Information</p>
+                    <p class="mBottom-4">
+                        <label class="customRadioBtn mRight-4">
+                            <input type="radio" name="b2bAccount" value="currentCustomer" id="currentCustomer" title="Business Use" checked>
+                            <span>Business Use</span>
+                        </label>
+                        <label class="customRadioBtn">
+                            <input type="radio" name="b2bAccount" value="newCustomer" id="newCustomer" title="Personal Use">
+                            <span>Personal Use</span>
+                        </label>
+                    </p>
+                    <p class="mBottom-4 required">* Denotes Required Field</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="firstName">$locale.get("form.label.firstName") <span class="text-danger">*</span></label>
+                                <input type="text" name="firstName2AB" id="firstName" placeholder="$locale.get('form.label.firstName')" data-type="text" data-required="Y" data-error="$locale.get('form.user.firstName.notEmpty')" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="lastName">$locale.get("form.label.lastName") <span class="text-danger">*</span></label>
+                                <input type="text" name="lastName2AB" id="lastName" placeholder="$locale.get('form.label.lastName')" data-type="text" data-required="Y" data-error="$locale.get('form.user.lastName.notEmpty')" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="emailAddress">Work $locale.get("form.label.email") <span class="text-danger">*</span></label>
+                                <input type="email" name="emailAddress2AB" id="emailAddress" placeholder="$locale.get('form.label.email')" data-type="email" data-required="Y" data-error="$locale.get('form.user.address.emailId.notEmpty')" data-invalid="$locale.get('form.user.address.emailId.invalid')" class="form-control"/>
+                                <div class="mTop-2">
+                                    <label class="customCheckBox">
+                                        <input type="checkbox" checked="checked" name="" id="newsLetterSub2A" title="News Letter"/>
+                                        <span>Email me special marketing promotions and updates.</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="phCode">Country Code <span class="text-danger">*</span></label>
+                                <select id='phCode' data-type="select" data-required="Y" data-error="Select Country Code" class="form-control">
+                                    <option value="+1">+1</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="phoneNo">$locale.get("form.label.phone") <span class="text-danger">*</span></label>
+                                <input type="tel" name="phoneNo2AB" id="phoneNo" class="formatPhoneNumber form-control" placeholder="$locale.get('form.label.phone')" data-type="number" data-required="Y" data-error="$locale.get('form.user.address.phoneNumber.notEmpty')" data-invalid="$locale.get('form.user.address.phoneNumber.invalid')" onkeypress="return IsNumeric(event)"/>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="extension">Extension</label>
+                                <input type="tel" name="extension2AB" id="extension" class="formatPhoneNumber form-control" placeholder="Extension" data-type="number" onkeypress="return IsNumeric(event)"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- I am a current Customer but need an online account -->
+                <div id="currentCustomerForm" class="form-section active">
+                    <h3>I am a current Customer but need an online account</h3>
+                    <!-- Insert relevant form fields for current customer here -->
+                </div>
+
+                <!-- New retail customer account -->
+                <div id="newCustomerForm" class="form-section">
+                    <h3>New Retail Customer Account</h3>
+                    <!-- Insert relevant form fields for new customer here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Request B2B Account Button -->
+        <div id="requestB2BButton" class="form-section">
+            <button type="button" onclick="showRequestBusinessAccount()">Request B2B Account</button>
+        </div>
+
+        <!-- Request Business Account Form -->
+        <div id="requestBusinessAccountForm" class="form-section">
+            <h3>Request Business Account</h3>
+            <!-- Insert relevant form fields for requesting B2B account here -->
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const b2bRadios = document.querySelectorAll('input[name="b2bAccount"]');
+        const currentCustomerForm = document.getElementById('currentCustomerForm');
+        const newCustomerForm = document.getElementById('newCustomerForm');
+        const requestB2BButton = document.getElementById('requestB2BButton');
+        const requestBusinessAccountForm = document.getElementById('requestBusinessAccountForm');
+
+        b2bRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.value === 'currentCustomer') {
+                    currentCustomerForm.classList.add('active');
+                    newCustomerForm.classList.remove('active');
+                    requestB2BButton.classList.remove('active');
+                    requestBusinessAccountForm.classList.remove('active');
+                } else if (radio.value === 'newCustomer') {
+                    currentCustomerForm.classList.remove('active');
+                    newCustomerForm.classList.add('active');
+                    requestB2BButton.classList.add('active');
+                    requestBusinessAccountForm.classList.remove('active');
+                }
+            });
+        });
+
+        window.showRequestBusinessAccount = function() {
+            requestBusinessAccountForm.classList.add('active');
+            newCustomerForm.classList.remove('active');
+            requestB2BButton.classList.remove('active');
+        }
+    });
+</script>
+
+</body>
+</html>
