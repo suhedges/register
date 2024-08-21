@@ -13,11 +13,12 @@
         }
 
         .container {
-            width: 700px;
+            width: 1000px;
             margin: 50px auto;
             background-color: #ffffff;
             padding: 50px;
             box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
 
         h2 {
@@ -86,13 +87,31 @@
         input[type="password"],
         select {
             width: 100%;
+            height: 38px;
             padding: 10px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
         }
 
         .form-group {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             width: 48%;
         }
 
@@ -101,17 +120,37 @@
         }
 
         .form-actions {
-            text-align: center;
-            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-top: 30px;
+            position: relative;
         }
 
-        .form-actions label {
+        .form-actions-left {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .form-actions-left label {
             display: flex;
             align-items: center;
-            justify-content: center;
-            text-align: left;
-            font-size: 14px;
-            color: #333;
+            justify-content: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .form-actions-left input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .form-actions-right {
+            display: flex;
+            justify-content: flex-end;
+            position: absolute;
+            right: 0;
+            bottom: 0;
         }
 
         .submit-button {
@@ -147,15 +186,122 @@
         }
 
         .radio-options {
-            display: flex;
-            justify-content: center; /* Center alignment */
-            /* justify-content: flex-end; */ /* Uncomment this line for right alignment */
-            gap: 10px; /* Add some space between the radio buttons */
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: nowrap;
         }
 
-        .form-actions input[type="checkbox"],
-        .form-actions label {
-            cursor: pointer;
+        .radio-options label {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            padding: 0px;
+            white-space: nowrap; 
+        }
+
+        .radio-options input[type="radio"] {
+            margin-right: 5px;
+            padding: 0px;
+        }
+
+        .Jrole1 input[type="text"] {
+            width: 80%;
+            text-align: left;
+            height: 36px;
+        }
+
+        #state {
+            width: calc(50% - 5px);
+            height: 38px;
+            padding: 6px 10px;
+            line-height: 24px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        #zipCode {
+            height: 38px;
+            padding: 6px 10px;
+            margin-bottom: 35px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .state-zip-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .zip-code-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            width: calc(50% - 5px);
+            margin-top: 0;
+        }
+
+        .zip-required-label {
+            font-size: 12px;
+            margin-bottom: 3px;
+            align-self: flex-start;
+        }
+
+        .tooltip {
+            position: absolute;
+            background-color: #f44336;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            z-index: 10;
+            display: none;
+            transform: translateX(-50%);
+            bottom: 100%; 
+            left: 50%;
+            margin-bottom: 5px; 
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%; 
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: #f44336 transparent transparent transparent;
+        }
+        .highlight-error {
+            border-color: #f44336;
+            box-shadow: 0 0 5px rgba(244, 67, 54, 0.5);
+        }
+
+        #personCreditable label {
+            text-align: center;
+            display: block;
+            width: 100%;
+        }
+
+        #personCreditable > label {
+            color: #6E98AD; 
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        label[for="hasAccount"] {
+            color: #6E98AD; 
+            font-size: 18px;
+            font-weight: bold;
         }
 
     </style>
@@ -164,53 +310,56 @@
 
 <div class="container">
     <h2>REGISTRATION</h2>
-    <p class="description">Registering with us is simple. Please make your selection(s) and complete the form below to create your account. Fields marked with an asterisk (*) are required.</p>
-    <ul class="checkbox-description">
-    </ul>
+    <p class="description">You must register to checkout and access additional tools and features. Please make your selection(s) and complete the form below to create your account. Fields marked with an asterisk (<span class="required">*</span> Indicates a Required Field) are required.</p>
 
     <div class="radio-group">
         <label for="hasAccount">Do you have an account number with Tri-State Bearing already?</label>
-        <label><input type="radio" name="account" value="yes"> YES</label>
-        <label><input type="radio" name="account" value="no"> NO</label>
+        <label><input type="radio" name="account" value="yes"> <b>YES</b></label>
+        <label><input type="radio" name="account" value="no"> <b>NO</b></label>
     </div>
 
     <!-- Person/Creditable Selection -->
     <div id="personCreditable" class="select-group form">
-        <label>Is this a personal account, or would you like to begin setting up a creditable account?</label>
+        <label>Is this a personal account or would you like to begin a new creditable account request?</label>
         <div class="radio-options">
-            <label><input type="radio" name="accountType" value="person"> Personal</label>
-            <label><input type="radio" name="accountType" value="creditable"> Creditable</label>
+            <label><input type="radio" name="accountType" value="person"> <b>Personal</b></label>
+            <label><input type="radio" name="accountType" value="creditable"> <b>Creditable</b></label>
         </div>
     </div>
 
     <!-- Form for YES -->
     <div id="formYes" class="form">
         <h3 class="hidden-label">Existing Business Account User Registration</h3>
-        <p class="note">* Indicates a Required Field</p>
-        <form>
+        <p class="note"><span class="required">*</span> Indicates a Required Field</p>
+        <form id="registrationForm">
             <div class="form-group">
                 <label for="firstName">First Name <span class="required">*</span></label>
-                <input type="text" id="firstName" name="firstName" required>
+                <input type="text" id="firstName" name="firstName" autocomplete="given-name" required>
+                <div class="tooltip">First name is required</div>
             </div>
 
             <div class="form-group">
                 <label for="lastName">Last Name <span class="required">*</span></label>
-                <input type="text" id="lastName" name="lastName" required>
+                <input type="text" id="lastName" name="lastName" autocomplete="family-name" required>
+                <div class="tooltip">Last name is required</div>
             </div>
 
             <div class="form-group">
                 <label for="companyName">Company Name <span class="required">*</span></label>
                 <input type="text" id="companyName" name="companyName" required>
+                <div class="tooltip">Company name is required</div>
             </div>
 
             <div class="form-group">
                 <label for="accountNumber">Account Number <span class="required">*</span></label>
-                <input type="text" id="accountNumber" name="accountNumber" required>
+                <input type="text" id="accountNumber" name="accountNumber" autocomplete="off" required>
+                <div class="tooltip">Account number is required</div>
             </div>
 
             <div class="form-group">
                 <label for="address1">Address 1 <span class="required">*</span></label>
                 <input type="text" id="address1" name="address1" required>
+                <div class="tooltip">Address 1 is required</div>
             </div>
 
             <div class="form-group">
@@ -220,114 +369,125 @@
 
             <div class="form-group">
                 <label for="city">City <span class="required">*</span></label>
-                <input type="text" id="city" name="city" required>
+                <input type="text" id="city" name="city" autocomplete="address-level2" required>
+                <div class="tooltip">City is required</div>
             </div>
 
             <div class="form-group">
                 <label for="country">Country <span class="required">*</span></label>
-                <select id="country" name="country" required>
+                <select id="country" name="country" autocomplete="country" required>
                     <option value="United States">United States</option>
                     <!-- Add more countries as options -->
                 </select>
+                <div class="tooltip">Country is required</div>
             </div>
 
             <div class="form-group">
                 <label for="state">State <span class="required">*</span></label>
-                <select id="state" name="state" required>
-                    <option value="">Select State</option>
-                    <option value="AL">Alabama</option>
-                    <option value="AK">Alaska</option>
-                    <option value="AZ">Arizona</option>
-                    <option value="AR">Arkansas</option>
-                    <option value="CA">California</option>
-                    <option value="CO">Colorado</option>
-                    <option value="CT">Connecticut</option>
-                    <option value="DE">Delaware</option>
-                    <option value="FL">Florida</option>
-                    <option value="GA">Georgia</option>
-                    <option value="HI">Hawaii</option>
-                    <option value="ID">Idaho</option>
-                    <option value="IL">Illinois</option>
-                    <option value="IN">Indiana</option>
-                    <option value="IA">Iowa</option>
-                    <option value="KS">Kansas</option>
-                    <option value="KY">Kentucky</option>
-                    <option value="LA">Louisiana</option>
-                    <option value="ME">Maine</option>
-                    <option value="MD">Maryland</option>
-                    <option value="MA">Massachusetts</option>
-                    <option value="MI">Michigan</option>
-                    <option value="MN">Minnesota</option>
-                    <option value="MS">Mississippi</option>
-                    <option value="MO">Missouri</option>
-                    <option value="MT">Montana</option>
-                    <option value="NE">Nebraska</option>
-                    <option value="NV">Nevada</option>
-                    <option value="NH">New Hampshire</option>
-                    <option value="NJ">New Jersey</option>
-                    <option value="NM">New Mexico</option>
-                    <option value="NY">New York</option>
-                    <option value="NC">North Carolina</option>
-                    <option value="ND">North Dakota</option>
-                    <option value="OH">Ohio</option>
-                    <option value="OK">Oklahoma</option>
-                    <option value="OR">Oregon</option>
-                    <option value="PA">Pennsylvania</option>
-                    <option value="RI">Rhode Island</option>
-                    <option value="SC">South Carolina</option>
-                    <option value="SD">South Dakota</option>
-                    <option value="TN">Tennessee</option>
-                    <option value="TX">Texas</option>
-                    <option value="UT">Utah</option>
-                    <option value="VT">Vermont</option>
-                    <option value="VA">Virginia</option>
-                    <option value="WA">Washington</option>
-                    <option value="WV">West Virginia</option>
-                    <option value="WI">Wisconsin</option>
-                    <option value="WY">Wyoming</option>
-                </select>
-            </div>
+                <div class="state-zip-group">
+                    <select id="state" name="state" autocomplete="address-level1" required>
+                        <option value="">Select State</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="FL">Florida</option>
+                        <option value="GA">Georgia</option>
+                        <option value="HI">Hawaii</option>
+                        <option value="ID">Idaho</option>
+                        <option value="IL">Illinois</option>
+                        <option value="IN">Indiana</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                        <option value="KY">Kentucky</option>
+                        <option value="LA">Louisiana</option>
+                        <option value="ME">Maine</option>
+                        <option value="MD">Maryland</option>
+                        <option value="MA">Massachusetts</option>
+                        <option value="MI">Michigan</option>
+                        <option value="MN">Minnesota</option>
+                        <option value="MS">Mississippi</option>
+                        <option value="MO">Missouri</option>
+                        <option value="MT">Montana</option>
+                        <option value="NE">Nebraska</option>
+                        <option value="NV">Nevada</option>
+                        <option value="NH">New Hampshire</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NM">New Mexico</option>
+                        <option value="NY">New York</option>
+                        <option value="NC">North Carolina</option>
+                        <option value="ND">North Dakota</option>
+                        <option value="OH">Ohio</option>
+                        <option value="OK">Oklahoma</option>
+                        <option value="OR">Oregon</option>
+                        <option value="PA">Pennsylvania</option>
+                        <option value="RI">Rhode Island</option>
+                        <option value="SC">South Carolina</option>
+                        <option value="SD">South Dakota</option>
+                        <option value="TN">Tennessee</option>
+                        <option value="TX">Texas</option>
+                        <option value="UT">Utah</option>
+                        <option value="VT">Vermont</option>
+                        <option value="VA">Virginia</option>
+                        <option value="WA">Washington</option>
+                        <option value="WV">West Virginia</option>
+                        <option value="WI">Wisconsin</option>
+                        <option value="WY">Wyoming</option>
+                    </select>
 
-            <div class="form-group">
-                <label for="zipCode">Zip Code <span class="required">*</span></label>
-                <input type="text" id="zipCode" name="zipCode" required>
+                    <div class="zip-code-container">
+                        <label for="zipCode">Zip Code <span class="required">*</span></label>
+                        <input type="text" id="zipCode" name="postal-code" autocomplete="postal-code" required>
+                        <div class="tooltip">Zip code is required</div>
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
                 <label for="phoneNumber">Phone Number <span class="required">*</span></label>
                 <input type="text" id="phoneNumber" name="phoneNumber" required>
+                <div class="tooltip">Phone number is required</div>
             </div>
 
-            <div class="form-group-full">
-                <label for="jobRole">Job Role</label>
-                <input type="text" id="jobRole" name="jobRole">
+            <div class="Jrole1">
+                <label for="jobRole">Job Title</label>
+                <input type="text" id="jobRole" name="jobRole" required>
+                <div class="tooltip">Job title is required</div>
             </div>
 
             <div class="form-group">
                 <label for="emailAddress">Email Address <span class="required">*</span></label>
-                <input type="email" id="emailAddress" name="emailAddress" required>
+                <input type="email" id="emailAddress" name="emailAddress" placeholder="email@example.com" required>
+                <div class="tooltip">Email address is required</div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group password-container">
                 <label for="password">Password <span class="required">*</span></label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" placeholder="********" required>
+                <span class="toggle-password" onclick="togglePasswordVisibility('password')">&#128065;</span>
+                <div class="tooltip">Password is required</div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group password-container">
                 <label for="confirmPassword">Confirm Password <span class="required">*</span></label>
                 <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <span class="toggle-password" onclick="togglePasswordVisibility('confirmPassword')">&#128065;</span>
+                <div class="tooltip">Confirm password is required</div>
             </div>
 
             <div class="form-actions">
-                <label><input type="checkbox" id="subscribe" name="subscribe">Tri-State Bearing Company, Inc newsletter subscription.</label>
-            </div>
-
-            <div class="form-actions">
-                <label><input type="checkbox" id="terms" name="terms" required>By clicking "Submit" I am agreeing to Tri-State Bearing's Terms and Conditions.</label>
-            </div>
-
-            <div class="form-actions">
-                <button type="submit" class="submit-button">I Accept</button>
+                <div class="form-actions-left">
+                    <label><input type="checkbox" id="subscribe" name="subscribe">Tri-State Bearing Company, Inc newsletter subscription.</label>
+                    <label><input type="checkbox" id="terms" name="terms" required>By clicking "Submit" I am agreeing to Tri-State Bearing's Terms and Conditions.</label>
+                    <div class="tooltip">You must agree to the terms</div>
+                </div>
+                <div class="form-actions-right">
+                    <button type="submit" class="submit-button">I Accept</button>
+                </div>
             </div>
         </form>
     </div>
@@ -339,27 +499,32 @@
         <form>
             <div class="form-group">
                 <label for="firstName">First Name <span class="required">*</span></label>
-                <input type="text" id="firstName" name="firstName" required>
+                <input type="text" id="firstName" name="firstName" autocomplete="given-name" required>
+                <div class="tooltip">First name is required</div>
             </div>
 
             <div class="form-group">
                 <label for="lastName">Last Name <span class="required">*</span></label>
-                <input type="text" id="lastName" name="lastName" required>
+                <input type="text" id="lastName" name="lastName" autocomplete="family-name" required>
+                <div class="tooltip">Last name is required</div>
             </div>
 
             <div class="form-group">
                 <label for="companyName">Company Name <span class="required">*</span></label>
                 <input type="text" id="companyName" name="companyName" required>
+                <div class="tooltip">Company name is required</div>
             </div>
 
             <div class="form-group">
                 <label for="emailAddress">Email Address <span class="required">*</span></label>
                 <input type="email" id="emailAddress" name="emailAddress" required>
+                <div class="tooltip">Email address is required</div>
             </div>
 
             <div class="form-group">
                 <label for="address1">Address 1 <span class="required">*</span></label>
                 <input type="text" id="address1" name="address1" required>
+                <div class="tooltip">Address 1 is required</div>
             </div>
 
             <div class="form-group">
@@ -369,104 +534,100 @@
 
             <div class="form-group">
                 <label for="city">City <span class="required">*</span></label>
-                <input type="text" id="city" name="city" required>
+                <input type="text" id="city" name="city" autocomplete="address-level2" required>
+                <div class="tooltip">City is required</div>
             </div>
 
             <div class="form-group">
                 <label for="country">Country <span class="required">*</span></label>
-                <select id="country" name="country" required>
+                <select id="country" name="country" autocomplete="country" required>
                     <option value="United States">United States</option>
                     <!-- Add more countries as options -->
                 </select>
+                <div class="tooltip">Country is required</div>
             </div>
 
             <div class="form-group">
                 <label for="state">State <span class="required">*</span></label>
-                <select id="state" name="state" required>
-                    <option value="">Select State</option>
-                    <option value="AL">Alabama</option>
-                    <option value="AK">Alaska</option>
-                    <option value="AZ">Arizona</option>
-                    <option value="AR">Arkansas</option>
-                    <option value="CA">California</option>
-                    <option value="CO">Colorado</option>
-                    <option value="CT">Connecticut</option>
-                    <option value="DE">Delaware</option>
-                    <option value="FL">Florida</option>
-                    <option value="GA">Georgia</option>
-                    <option value="HI">Hawaii</option>
-                    <option value="ID">Idaho</option>
-                    <option value="IL">Illinois</option>
-                    <option value="IN">Indiana</option>
-                    <option value="IA">Iowa</option>
-                    <option value="KS">Kansas</option>
-                    <option value="KY">Kentucky</option>
-                    <option value="LA">Louisiana</option>
-                    <option value="ME">Maine</option>
-                    <option value="MD">Maryland</option>
-                    <option value="MA">Massachusetts</option>
-                    <option value="MI">Michigan</option>
-                    <option value="MN">Minnesota</option>
-                    <option value="MS">Mississippi</option>
-                    <option value="MO">Missouri</option>
-                    <option value="MT">Montana</option>
-                    <option value="NE">Nebraska</option>
-                    <option value="NV">Nevada</option>
-                    <option value="NH">New Hampshire</option>
-                    <option value="NJ">New Jersey</option>
-                    <option value="NM">New Mexico</option>
-                    <option value="NY">New York</option>
-                    <option value="NC">North Carolina</option>
-                    <option value="ND">North Dakota</option>
-                    <option value="OH">Ohio</option>
-                    <option value="OK">Oklahoma</option>
-                    <option value="OR">Oregon</option>
-                    <option value="PA">Pennsylvania</option>
-                    <option value="RI">Rhode Island</option>
-                    <option value="SC">South Carolina</option>
-                    <option value="SD">South Dakota</option>
-                    <option value="TN">Tennessee</option>
-                    <option value="TX">Texas</option>
-                    <option value="UT">Utah</option>
-                    <option value="VT">Vermont</option>
-                    <option value="VA">Virginia</option>
-                    <option value="WA">Washington</option>
-                    <option value="WV">West Virginia</option>
-                    <option value="WI">Wisconsin</option>
-                    <option value="WY">Wyoming</option>
-                </select>
-            </div>
+                <div class="state-zip-group">
+                    <select id="state" name="state" autocomplete="address-level1" required>
+                        <option value="">Select State</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="FL">Florida</option>
+                        <option value="GA">Georgia</option>
+                        <option value="HI">Hawaii</option>
+                        <option value="ID">Idaho</option>
+                        <option value="IL">Illinois</option>
+                        <option value="IN">Indiana</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                        <option value="KY">Kentucky</option>
+                        <option value="LA">Louisiana</option>
+                        <option value="ME">Maine</option>
+                        <option value="MD">Maryland</option>
+                        <option value="MA">Massachusetts</option>
+                        <option value="MI">Michigan</option>
+                        <option value="MN">Minnesota</option>
+                        <option value="MS">Mississippi</option>
+                        <option value="MO">Missouri</option>
+                        <option value="MT">Montana</option>
+                        <option value="NE">Nebraska</option>
+                        <option value="NV">Nevada</option>
+                        <option value="NH">New Hampshire</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NM">New Mexico</option>
+                        <option value="NY">New York</option>
+                        <option value="NC">North Carolina</option>
+                        <option value="ND">North Dakota</option>
+                        <option value="OH">Ohio</option>
+                        <option value="OK">Oklahoma</option>
+                        <option value="OR">Oregon</option>
+                        <option value="PA">Pennsylvania</option>
+                        <option value="RI">Rhode Island</option>
+                        <option value="SC">South Carolina</option>
+                        <option value="SD">South Dakota</option>
+                        <option value="TN">Tennessee</option>
+                        <option value="TX">Texas</option>
+                        <option value="UT">Utah</option>
+                        <option value="VT">Vermont</option>
+                        <option value="VA">Virginia</option>
+                        <option value="WA">Washington</option>
+                        <option value="WV">West Virginia</option>
+                        <option value="WI">Wisconsin</option>
+                        <option value="WY">Wyoming</option>
+                    </select>
 
-
-            <div class="form-group">
-                <label for="zipCode">Zip Code <span class="required">*</span></label>
-                <input type="text" id="zipCode" name="zipCode" required>
+                    <div class="zip-code-container">
+                        <label for="zipCode">Zip Code <span class="required">*</span></label>
+                        <input type="text" id="zipCode" name="zipCode" placeholder="Zip Code" required>
+                        <div class="tooltip">Zip code is required</div>
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
                 <label for="phoneNumber">Phone Number <span class="required">*</span></label>
                 <input type="text" id="phoneNumber" name="phoneNumber" required>
-            </div>
-
-            <div class="form-group-full">
-                <label for="jobRole">Job Role</label>
-                <input type="text" id="jobRole" name="jobRole">
+                <div class="tooltip">Phone number is required</div>
             </div>
 
             <div class="form-actions">
-                <label><input type="checkbox" id="subscribe" name="subscribe">Tri-State Bearing Company, Inc newsletter subscription.</label>
-            </div>
-
-            <div class="form-actions">
-                <label><input type="checkbox" id="creditAccount" name="creditAccount" required>I understand this is a request for a credit account and a credit check is required.</label>
-            </div>
-
-            <div class="form-actions">
-                <label><input type="checkbox" id="terms" name="terms" required>By clicking "Submit" I am agreeing to Tri-State Bearing's Terms and Conditions.</label>
-            </div>
-
-            <div class="form-actions">
-                <button type="submit" class="submit-button">I Accept</button>
+                <div class="form-actions-left">
+                    <label><input type="checkbox" id="subscribe" name="subscribe">Tri-State Bearing Company, Inc newsletter subscription.</label>
+                    <label><input type="checkbox" id="creditAccount" name="creditAccount" required>I understand this is a request for a credit account and a credit check is required.</label>
+                    <label><input type="checkbox" id="terms" name="terms" required>By clicking "Submit" I am agreeing to Tri-State Bearing's Terms and Conditions.</label>
+                    <div class="tooltip">You must agree to the terms</div>
+                </div>
+                <div class="form-actions-right">
+                    <button type="submit" class="submit-button">I Accept</button>
+                </div>
             </div>
         </form>
     </div>
@@ -478,12 +639,14 @@
         <form>
             <div class="form-group">
                 <label for="firstName">First Name <span class="required">*</span></label>
-                <input type="text" id="firstName" name="firstName" required>
+                <input type="text" id="firstName" name="firstName" autocomplete="given-name" required>
+                <div class="tooltip">First name is required</div>
             </div>
 
             <div class="form-group">
                 <label for="lastName">Last Name <span class="required">*</span></label>
-                <input type="text" id="lastName" name="lastName" required>
+                <input type="text" id="lastName" name="lastName" autocomplete="family-name" required>
+                <div class="tooltip">Last name is required</div>
             </div>
 
             <div class="form-group">
@@ -494,21 +657,13 @@
             <div class="form-group">
                 <label for="email">Email <span class="required">*</span></label>
                 <input type="email" id="email" name="email" required>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Password <span class="required">*</span></label>
-                <input type="password" id="password" name="password" required>
-            </div>
-
-            <div class="form-group">
-                <label for="confirmPassword">Confirm Password <span class="required">*</span></label>
-                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <div class="tooltip">Email is required</div>
             </div>
 
             <div class="form-group">
                 <label for="address1">Address 1 <span class="required">*</span></label>
                 <input type="text" id="address1" name="address1" required>
+                <div class="tooltip">Address 1 is required</div>
             </div>
 
             <div class="form-group">
@@ -518,83 +673,109 @@
 
             <div class="form-group">
                 <label for="city">City <span class="required">*</span></label>
-                <input type="text" id="city" name="city" required>
+                <input type="text" id="city" name="city" autocomplete="address-level2" required>
+                <div class="tooltip">City is required</div>
             </div>
 
             <div class="form-group">
                 <label for="state">State <span class="required">*</span></label>
-                <select id="state" name="state" required>
-                    <option value="">Select State</option>
-                    <option value="AL">Alabama</option>
-                    <option value="AK">Alaska</option>
-                    <option value="AZ">Arizona</option>
-                    <option value="AR">Arkansas</option>
-                    <option value="CA">California</option>
-                    <option value="CO">Colorado</option>
-                    <option value="CT">Connecticut</option>
-                    <option value="DE">Delaware</option>
-                    <option value="FL">Florida</option>
-                    <option value="GA">Georgia</option>
-                    <option value="HI">Hawaii</option>
-                    <option value="ID">Idaho</option>
-                    <option value="IL">Illinois</option>
-                    <option value="IN">Indiana</option>
-                    <option value="IA">Iowa</option>
-                    <option value="KS">Kansas</option>
-                    <option value="KY">Kentucky</option>
-                    <option value="LA">Louisiana</option>
-                    <option value="ME">Maine</option>
-                    <option value="MD">Maryland</option>
-                    <option value="MA">Massachusetts</option>
-                    <option value="MI">Michigan</option>
-                    <option value="MN">Minnesota</option>
-                    <option value="MS">Mississippi</option>
-                    <option value="MO">Missouri</option>
-                    <option value="MT">Montana</option>
-                    <option value="NE">Nebraska</option>
-                    <option value="NV">Nevada</option>
-                    <option value="NH">New Hampshire</option>
-                    <option value="NJ">New Jersey</option>
-                    <option value="NM">New Mexico</option>
-                    <option value="NY">New York</option>
-                    <option value="NC">North Carolina</option>
-                    <option value="ND">North Dakota</option>
-                    <option value="OH">Ohio</option>
-                    <option value="OK">Oklahoma</option>
-                    <option value="OR">Oregon</option>
-                    <option value="PA">Pennsylvania</option>
-                    <option value="RI">Rhode Island</option>
-                    <option value="SC">South Carolina</option>
-                    <option value="SD">South Dakota</option>
-                    <option value="TN">Tennessee</option>
-                    <option value="TX">Texas</option>
-                    <option value="UT">Utah</option>
-                    <option value="VT">Vermont</option>
-                    <option value="VA">Virginia</option>
-                    <option value="WA">Washington</option>
-                    <option value="WV">West Virginia</option>
-                    <option value="WI">Wisconsin</option>
-                    <option value="WY">Wyoming</option>
-                </select>
-            </div>
+                <div class="state-zip-group">
+                    <select id="state" name="state" autocomplete="address-level1" required>
+                        <option value="">Select State</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="FL">Florida</option>
+                        <option value="GA">Georgia</option>
+                        <option value="HI">Hawaii</option>
+                        <option value="ID">Idaho</option>
+                        <option value="IL">Illinois</option>
+                        <option value="IN">Indiana</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                        <option value="KY">Kentucky</option>
+                        <option value="LA">Louisiana</option>
+                        <option value="ME">Maine</option>
+                        <option value="MD">Maryland</option>
+                        <option value="MA">Massachusetts</option>
+                        <option value="MI">Michigan</option>
+                        <option value="MN">Minnesota</option>
+                        <option value="MS">Mississippi</option>
+                        <option value="MO">Missouri</option>
+                        <option value="MT">Montana</option>
+                        <option value="NE">Nebraska</option>
+                        <option value="NV">Nevada</option>
+                        <option value="NH">New Hampshire</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NM">New Mexico</option>
+                        <option value="NY">New York</option>
+                        <option value="NC">North Carolina</option>
+                        <option value="ND">North Dakota</option>
+                        <option value="OH">Ohio</option>
+                        <option value="OK">Oklahoma</option>
+                        <option value="OR">Oregon</option>
+                        <option value="PA">Pennsylvania</option>
+                        <option value="RI">Rhode Island</option>
+                        <option value="SC">South Carolina</option>
+                        <option value="SD">South Dakota</option>
+                        <option value="TN">Tennessee</option>
+                        <option value="TX">Texas</option>
+                        <option value="UT">Utah</option>
+                        <option value="VT">Vermont</option>
+                        <option value="VA">Virginia</option>
+                        <option value="WA">Washington</option>
+                        <option value="WV">West Virginia</option>
+                        <option value="WI">Wisconsin</option>
+                        <option value="WY">Wyoming</option>
+                    </select>
 
-
-            <div class="form-group">
-                <label for="zipCode">Zip/Postal Code <span class="required">*</span></label>
-                <input type="text" id="zipCode" name="zipCode" required>
+                    <div class="zip-code-container">
+                        <label for="zipCode">Zip Code <span class="required">*</span></label>
+                        <input type="text" id="zipCode" name="zipCode" placeholder="Zip Code" required>
+                        <div class="tooltip">Zip code is required</div>
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
                 <label for="phone">Phone <span class="required">*</span></label>
                 <input type="text" id="phone" name="phone" required>
+                <div class="tooltip">Phone is required</div>
             </div>
 
-            <div class="form-actions">
-                <label><input type="checkbox" id="subscribe" name="subscribe">Tri-State Bearing Company, Inc newsletter subscription.</label>
+            <div class="form-group">
+                <label for="blank"></label>
             </div>
 
+            <div class="form-group password-container">
+                <label for="password">Password <span class="required">*</span></label>
+                <input type="password" id="password" name="password" required>
+                <span class="toggle-password" onclick="togglePasswordVisibility('password')">&#128065;</span>
+                <div class="tooltip">Password is required</div>
+            </div>
+
+            <div class="form-group password-container">
+                <label for="confirmPassword">Confirm Password <span class="required">*</span></label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <span class="toggle-password" onclick="togglePasswordVisibility('confirmPassword')">&#128065;</span>
+                <div class="tooltip">Confirm password is required</div>
+            </div>
+
+
             <div class="form-actions">
-                <button type="submit" class="submit-button">I Accept</button>
+                <div class="form-actions-left">
+                    <label><input type="checkbox" id="subscribe" name="subscribe">Tri-State Bearing Company, Inc newsletter subscription.</label>
+                    <label><input type="checkbox" id="terms" name="terms" required>By clicking "Submit" I am agreeing to Tri-State Bearing's Terms and Conditions.</label>
+                    <div class="tooltip">You must agree to the terms</div>
+                </div>
+                <div class="form-actions-right">
+                    <button type="submit" class="submit-button">I Accept</button>
+                </div>
             </div>
         </form>
     </div>
@@ -637,6 +818,51 @@
                 }
             });
         });
+
+        // Password validation and visibility toggle
+        const form = document.getElementById('registrationForm');
+
+        form.addEventListener('submit', function (e) {
+            let isValid = true;
+            const requiredFields = form.querySelectorAll('[required]');
+            requiredFields.forEach(field => {
+                const tooltip = field.nextElementSibling;
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.classList.add('highlight-error');
+                    tooltip.style.display = 'block';
+                    tooltip.style.opacity = '1';
+        
+                    // Adjust tooltip position based on field
+                    const rect = field.getBoundingClientRect();
+                    tooltip.style.left = `${rect.left + window.scrollX + rect.width / 2}px`;
+                    tooltip.style.top = `${rect.top + window.scrollY - tooltip.offsetHeight - 5}px`; 
+                } else {
+                    field.classList.remove('highlight-error');
+                    tooltip.style.display = 'none';
+                    tooltip.style.opacity = '0';
+                }
+            });
+
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                isValid = false;
+                alert("Passwords do not match.");
+            }
+        
+            if (!isValid) {
+                e.preventDefault(); // Prevent form submission
+            }
+        });
+        function togglePasswordVisibility(fieldId) {
+            const passwordField = document.getElementById(fieldId);
+            const fieldType = passwordField.getAttribute('type');
+            passwordField.setAttribute('type', fieldType === 'password' ? 'text' : 'password');
+        }
+
+        window.togglePasswordVisibility = togglePasswordVisibility;
 
         // Phone number formatting
         document.querySelectorAll('input[type="text"]').forEach(input => {
